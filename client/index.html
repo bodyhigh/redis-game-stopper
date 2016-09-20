@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html ng-app="game">
+    <head>
+        <meta charset="utf-8">
+        <base href="/">
+        <title>Game Stopper Demo Client</title>
+        <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" media="screen" title="no title">
+        <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.css" media="screen" title="no title">
+        <link rel="stylesheet" href="/style/style.css" media="screen" title="no title">
+    </head>
+    <body>
+        <div class="container gameboard">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h1><i class="fa fa-gamepad fa-2x"></i>&nbsp;Game Stopper Demo</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 tile text-center">
+                    <div ng-view></div>
+                </div>
+                <div class="col-md-4 tile text-center">Hello Whorld</div>
+                <div class="col-md-4 tile text-center">Allo Whereld</div>
+            </div>
+        </div>
+
+        <script src="/bower_components/angular/angular.js" charset="utf-8"></script>
+        <script src="/bower_components/angular-route/angular-route.js" charset="utf-8"></script>
+        <script src="/bower_components/jquery/dist/jquery.js" charset="utf-8"></script>
+        <script src="/bower_components/bootstrap/dist/js/bootstrap.js" charset="utf-8"></script>
+
+        <script src="/app.js" charset="utf-8"></script>
+    </body>
+
+</html>

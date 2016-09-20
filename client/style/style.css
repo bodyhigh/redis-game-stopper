@@ -1,0 +1,28 @@
+html, body {
+}
+.gameboard {
+    border: #CCC solid 2px;
+    margin: 20px;
+    background-color: #EAEAEA;
+}
+
+.gameboard h1 {
+    border-bottom: #666 solid 10px;
+}
+
+.gameboard > .row {
+    overflow: hidden;
+}
+
+.row [class*="col-"]{
+  margin-bottom: -99999px;
+  padding-bottom: 99999px;
+}
+
+.tile {
+    border: #CCC solid 2px;
+}
+
+.badge-purple {
+    background-color: #9585bf!important
+}
