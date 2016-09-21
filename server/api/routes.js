@@ -16,7 +16,6 @@ router.route('/leaderboard')
             if (error) {
                 throw error;
             } else {
-                // res.status(200).json({results: data});
                 res.status(200).json(data);
             }
         });
