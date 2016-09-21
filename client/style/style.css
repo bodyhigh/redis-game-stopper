@@ -1,13 +1,19 @@
 html, body {
+    width: 100%;
 }
 .gameboard {
     border: #CCC solid 2px;
-    margin: 20px;
+    margin: 25px auto;
     background-color: #EAEAEA;
+    width: 80%;
 }
 
-.gameboard h1 {
-    border-bottom: #666 solid 10px;
+.banner {
+}
+
+.footer {
+    font-weight: bold;
+    margin: 15px;
 }
 
 .gameboard > .row {
@@ -20,7 +26,8 @@ html, body {
 }
 
 .tile {
-    border: #CCC solid 2px;
+    background-color: #FFF;
+    border: 5px solid #EAEAEA;
 }
 
 .badge-purple {

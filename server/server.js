@@ -7,9 +7,10 @@ var root = path.normalize(__dirname + '/..');
 app.set('clientPath', path.join(root, 'client'));
 app.use(express.static(app.get('clientPath')));
 
+app.use('/api', require('./api/routes'));
+
 app.get('/*', function(req, res) {
-    throw 'Error';
-    // res.sendFile(path.resolve(app.get('clientPath') + '/index.html'));
+    res.sendFile(path.resolve(app.get('clientPath') + '/index.html'));
 });
 
 module.exports = app;

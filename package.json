@@ -2,7 +2,7 @@
   "name": "redis-game-stopper",
   "version": "1.0.0",
   "description": "",
-  "main": "node ./bin/www",
+  "main": "index.js",
   "dependencies": {
     "express": "^4.14.0",
     "redis": "^2.6.2"
@@ -12,7 +12,9 @@
     "supertest": "^2.0.0"
   },
   "scripts": {
-    "test": "mocha tests/basic.js"
+    "start": "node ./server/bin/www",
+    "test": "mocha tests/basic.js",
+    "watch-test": "mocha --watch --reporter spec test"
   },
   "author": "",
   "license": "ISC"
