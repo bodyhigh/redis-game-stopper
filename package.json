@@ -4,8 +4,11 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "body-parser": "^1.15.2",
     "express": "^4.14.0",
-    "redis": "^2.6.2"
+    "get-env": "^0.5.1",
+    "redis": "^2.6.2",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "mocha": "^3.0.2",
@@ -14,8 +17,8 @@
   },
   "scripts": {
     "start": "node ./server/bin/www",
-    "test": "mocha tests/basic.js",
-    "watch-test": "mocha --watch --reporter spec test"
+    "test": "set NODE_ENV=test&&NODE_ENV=test mocha tests/basic.js",
+    "watch-test": "set NODE_ENV=test&&mocha --watch --reporter spec test"
   },
   "author": "",
   "license": "ISC"
