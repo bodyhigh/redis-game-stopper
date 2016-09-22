@@ -2,7 +2,7 @@ node_modules
 public
 .tmp
 .idea
-bower_components
+client/bower_components
 dist
 npm-debug.log
 coverage
