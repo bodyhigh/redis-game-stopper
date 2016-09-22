@@ -18,7 +18,8 @@
   "scripts": {
     "start": "node ./server/bin/www",
     "test": "set NODE_ENV=test&&NODE_ENV=test mocha tests/basic.js",
-    "watch-test": "set NODE_ENV=test&&mocha --watch --reporter spec test"
+    "watch-test": "set NODE_ENV=test&&mocha --watch --reporter spec test",
+    "postinstall": "bower install"
   },
   "repository": {
       "type": "git",
