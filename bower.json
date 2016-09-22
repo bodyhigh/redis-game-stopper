@@ -1,0 +1,17 @@
+{
+  "name": "redis-game-stopper",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Craig Moreno"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/bodyhigh/redis-game-stopper",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
