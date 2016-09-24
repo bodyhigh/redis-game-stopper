@@ -1,0 +1,45 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 tile text-center">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">You gotta spin it, to win it!!!</h3>
+                </div>
+                <div class="panel-body">
+                    <span class="badge badge-purple"><i ng-class="prizeIconClass"></i></span>
+
+                    <div>
+                        <h4>Score: <b>{{currentScore}}</b></h4>
+                    </div>
+
+                    <button type="button" name="start" ng-click="startSpin()" ng-hide="isSpinning()">Start Spin</button>
+                    <button type="button" name="stop" ng-click="stopSpin()" ng-show="isSpinning()">Stop Spin</button>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 tile text-center">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Leaderboard - Highest Total Points</h3>
+                </div>
+                <div class="panel-body">
+                    Panel content
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 tile text-center">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Leaderboard - Highest Average Points</h3>
+                </div>
+                <div class="panel-body">
+                    Panel content
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

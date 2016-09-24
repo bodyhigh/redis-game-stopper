@@ -1,33 +1,13 @@
-html, body {
-    width: 100%;
-}
-.gameboard {
-    border: #CCC solid 2px;
-    margin: 25px auto;
-    background-color: #EAEAEA;
-    width: 80%;
+body {
+    margin: 0 auto;
 }
 
-.banner {
+.loginPanel {
+    margin-top: 100px;
 }
 
-.footer {
-    font-weight: bold;
-    margin: 15px;
-}
-
-.gameboard > .row {
-    overflow: hidden;
-}
-
-.row [class*="col-"]{
-  margin-bottom: -99999px;
-  padding-bottom: 99999px;
-}
-
-.tile {
-    background-color: #FFF;
-    border: 5px solid #EAEAEA;
+.input-jumbo {
+    font-size: 60px;
 }
 
 .badge-purple {
