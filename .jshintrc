@@ -53,6 +53,7 @@
 
     "browser": true,
     "node": true,
+    "mocha": true,
 
     "globals": {
         "angular": false

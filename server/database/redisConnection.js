@@ -14,4 +14,6 @@ if (env === 'test') {
     client.select(env.length);
 }
 
+// TODO: Should I be closing the client as well?
+
 module.exports = client;

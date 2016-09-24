@@ -5,8 +5,8 @@ var app = express();
 var router = express.Router();
 var _ = require('underscore');
 
-// var bodyparser = require('body-parser');
-// var urlencoded = bodyparser.urlencoded({ extended: false});
+var bodyparser = require('body-parser');
+var urlencoded = bodyparser.urlencoded({extended: false});
 
 var redisClient = require('./../database/redisConnection');
 
@@ -56,7 +56,7 @@ router.route('/score/:userid/:score')
                         }
                     });
             }
-        })
+        });
 
         res.status(201).json('completed');
     });
@@ -73,11 +73,48 @@ router.route('/leaderboardHighestTotal')
              * learned this from http://stackoverflow.com/questions/8566667/split-javascript-array-in-chunks-using-underscore-js
             */
             var lists = _.groupBy(results, function(a,b) {
-                return Math.floor(b/2);
+                return Math.floor(b / 2);
             });
 
             res.status(200).json(_.toArray(lists));
         });
+    });
+
+router.route('/session')
+    .all(urlencoded)
+    .post(function(req, res) {
+        redisClient.incr('nextSessionId', function(error, nextId) {
+            if (error) {
+                throw error;
+            }
+
+            var sessionId = 'sessionId:' + nextId.toString();
+            redisClient.hmset(sessionId, 'name', req.body.name, 'password', req.body.password, function(error, results) {
+                if (error) {
+                    throw error;
+                }
+            });
+
+            res.status(201).json({sessionId: sessionId, name: req.body.name});
+        });
+    });
+
+router.route('/session/:sessionid')
+    .get(function(req, res) {
+        redisClient.hgetall(req.params.sessionid, function(error, results) {
+            if (error) {
+                throw error;
+            } else {
+                if (results === null) {
+                    res.status(204).json({error:'Session could not be found.'});
+                } else {
+                    res.status(200).json({sessionId: req.params.sessionid, name: results.name});
+                }
+            }
+        });
+
+        // TODO: Should I be closing this???
+        // redisClient.quit();
     });
 
 module.exports = router;
