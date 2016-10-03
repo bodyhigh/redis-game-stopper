@@ -2,6 +2,8 @@
 
 angular.module('redisGame', [
     // 'redisGame.login',
+    'ngResource',
+    'ngCookies',
     'ngRoute'])
     // Routes
     .config(function($routeProvider, $locationProvider) {

@@ -17,6 +17,8 @@ This is a test application to experiment with using Redis
 
 3. Run `npm start` to start the development server. It should automatically open the client in your browser when ready.
 
+4. Run `npm run nodemon` to start the development server with nodemon.
+
 ## Testing
 
 Running `npm run watch-test` will run the unit tests with karma.

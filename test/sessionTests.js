@@ -18,7 +18,15 @@ describe('/api/session', function() {
         ], done);
     });
 
-    describe('POST to /api/session registers a new user account', function() {
+    describe('POST: /api/session - registers a new user account', function() {
+        it('Returns 500 error if Name or Password is undefined', function(done) {
+            request(app)
+                .post('/api/session')
+                .send('name=bob')
+                .expect(/password/i)
+                .expect(400, done);
+        });
+
         it('Returns 200 status and a json result with sessionid and name', function(done) {
             request(app)
                 .post('/api/session')
@@ -31,7 +39,7 @@ describe('/api/session', function() {
                 });
         });
 
-        it('User\'s details were correctly recorded in the sessionId:X hash', function(done) {
+        it('Posted data was successfully saved in Redis hash [sessionId:X]', function(done) {
             request(app)
                 .post('/api/session')
                 .send('name=bob&password=hello')
@@ -51,7 +59,7 @@ describe('/api/session', function() {
         });
     });
 
-    describe('GET to /api/session/:sessionid', function() {
+    describe('GET: /api/session/:sessionid', function() {
         it('Returns 204 if session is not found', function(done) {
             request(app)
                 .get('/api/session/sessionId:9999')

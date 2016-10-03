@@ -6,6 +6,7 @@ var router = express.Router();
 var _ = require('underscore');
 
 var bodyparser = require('body-parser');
+var jsonParser = bodyparser.json();
 var urlencoded = bodyparser.urlencoded({extended: false});
 
 var redisClient = require('./../database/redisConnection');
@@ -80,23 +81,35 @@ router.route('/leaderboardHighestTotal')
         });
     });
 
+// router.route('/session/:name/:password')
 router.route('/session')
-    .all(urlencoded)
+    // .all(urlencoded)
+    .all(jsonParser)
     .post(function(req, res) {
-        redisClient.incr('nextSessionId', function(error, nextId) {
-            if (error) {
-                throw error;
-            }
+        // console.log('***********************************************');
+        // console.log(req.body);
+        // res.status(200).jsonp(req.body);
 
-            var sessionId = 'sessionId:' + nextId.toString();
-            redisClient.hmset(sessionId, 'name', req.body.name, 'password', req.body.password, function(error, results) {
+        // // console.log(!req.body.name);
+        // // console.log(!req.body.password);
+        if (!req.body.name || !req.body.password) {
+            res.status(400).json({error: 'Name or Password parameters were undefined', name: req.body.name, password: req.body.password});
+        } else {
+            redisClient.incr('nextSessionId', function(error, nextId) {
                 if (error) {
                     throw error;
                 }
-            });
 
-            res.status(201).json({sessionId: sessionId, name: req.body.name});
-        });
+                var sessionId = 'sessionId:' + nextId.toString();
+                redisClient.hmset(sessionId, 'name', req.body.name, 'password', req.body.password, function(error, results) {
+                    if (error) {
+                        throw error;
+                    }
+                });
+
+                res.status(201).json({sessionId: sessionId, name: req.body.name});
+            });
+        }
     });
 
 router.route('/session/:sessionid')
