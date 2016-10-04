@@ -86,12 +86,6 @@ router.route('/session')
     // .all(urlencoded)
     .all(jsonParser)
     .post(function(req, res) {
-        // console.log('***********************************************');
-        // console.log(req.body);
-        // res.status(200).jsonp(req.body);
-
-        // // console.log(!req.body.name);
-        // // console.log(!req.body.password);
         if (!req.body.name || !req.body.password) {
             res.status(400).json({error: 'Name or Password parameters were undefined', name: req.body.name, password: req.body.password});
         } else {

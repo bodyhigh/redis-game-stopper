@@ -6,23 +6,21 @@ var redisClient = require('./../server/database/redisConnection');
 
 describe('/api/session', function() {
     before('Flush the database and populate with known values', function(done) {
-        // TODO: Flush the database and populate with known values
         redisClient.flushdb();
 
         async.series([
-            function(cb) { request(app).post('/api/session').send('name=bob dobbs&password=supergenius').expect(201,cb); },
-            // function(cb) { request(app).get('/api/score/2000/0').expect(201, cb); },
-            // function(cb) { request(app).get('/api/score/2000/1').expect(201, cb); },
-            // function(cb) { request(app).get('/api/score/3000/-12').expect(201, cb); },
-            // function(cb) { request(app).get('/api/score/4000/2323').expect(201, cb); }
+            function(cb) { request(app).post('/api/session').send({name: 'bob dobbs', password: 'supergenius'}).expect(201,cb); }
         ], done);
+
+        // done();
     });
 
-    describe('POST: /api/session - registers a new user account', function() {
+    describe('[POST: /api/session - registers a new user account] ', function() {
         it('Returns 500 error if Name or Password is undefined', function(done) {
             request(app)
                 .post('/api/session')
-                .send('name=bob')
+                // .type('json')
+                .send({foo: 'bar'})
                 .expect(/password/i)
                 .expect(400, done);
         });
@@ -30,7 +28,8 @@ describe('/api/session', function() {
         it('Returns 200 status and a json result with sessionid and name', function(done) {
             request(app)
                 .post('/api/session')
-                .send('name=bob&password=hello')
+                // .type('json')
+                .send({name: 'someone', password: 'secretpassword'})
                 .expect(201)
                 .end(function(error, results) {
                     should(results.body).have.property('sessionId');
@@ -42,7 +41,8 @@ describe('/api/session', function() {
         it('Posted data was successfully saved in Redis hash [sessionId:X]', function(done) {
             request(app)
                 .post('/api/session')
-                .send('name=bob&password=hello')
+                // .type('json')
+                .send({name: 'someone', password: 'secretpassword'})
                 .expect(201)
                 .expect(/sessionid:/i)
                 .end(function(err, res) {
@@ -51,8 +51,8 @@ describe('/api/session', function() {
                     }
 
                     redisClient.hgetall(res.body.sessionId, function(error, results) {
-                        should(results.name).equal('bob');
-                        should(results.password).equal('hello');
+                        should(results.name).equal('someone');
+                        should(results.password).equal('secretpassword');
                         done();
                     });
                 });
