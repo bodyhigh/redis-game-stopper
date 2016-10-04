@@ -6,13 +6,16 @@ angular.module('redisGame')
 authService.$inject = ['$cookies'];
 
 function authService($cookies) {
-    var sessionIdKey = 'redisGameSessionId';
+    var gameSessionKey = 'redisGameSession';
     var sessionCookie;
 
     var auth = {
         isLoggedIn: isLoggedIn,
+        getSession: getSession,
+        setSession: setSession,
+        logout: logout,
         getSessionId: getSessionId,
-        setSessionId: setSessionId,
+        getName: getName
     };
 
     refreshCookieRef();
@@ -23,15 +26,38 @@ function authService($cookies) {
     }
 
     function refreshCookieRef() {
-        sessionCookie = getSessionId();
+        sessionCookie = getSession();
+    }
+
+    function getSession() {
+        return $cookies.getObject(gameSessionKey);
+    }
+
+    function setSession(sessionData) {
+        $cookies.putObject(gameSessionKey, sessionData);
+        refreshCookieRef();
+    }
+
+    function logout() {
+        $cookies.remove(gameSessionKey);
+        refreshCookieRef();
     }
 
     function getSessionId() {
-        return $cookies.getObject(sessionIdKey);
+        var session = getSession();
+        if (session) {
+            return session.sessionId;
+        } else {
+            return '';
+        }
     }
 
-    function setSessionId(sessionData) {
-        $cookies.putObject(sessionIdKey, sessionData);
-        refreshCookieRef();
+    function getName() {
+        var session = getSession();
+        if (session) {
+            return session.name;
+        } else {
+            return '';
+        }
     }
 }

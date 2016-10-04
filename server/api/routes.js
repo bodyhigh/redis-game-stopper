@@ -89,19 +89,33 @@ router.route('/session')
         if (!req.body.name || !req.body.password) {
             res.status(400).json({error: 'Name or Password parameters were undefined', name: req.body.name, password: req.body.password});
         } else {
-            redisClient.incr('nextSessionId', function(error, nextId) {
-                if (error) {
-                    throw error;
-                }
+            redisClient.hget('gameUsers', req.body.name, function(err, sessionId) {
+                if (err) {
+                    throw err;
+                } else {
+                    if (sessionId) {
+                        // Session already exists for this user
+                        res.status(201).json({sessionId: sessionId, name: req.body.name});
+                    } else {
+                        // Creating new session
+                        redisClient.incr('nextSessionId', function(error, nextId) {
+                            if (error) {
+                                throw error;
+                            }
 
-                var sessionId = 'sessionId:' + nextId.toString();
-                redisClient.hmset(sessionId, 'name', req.body.name, 'password', req.body.password, function(error, results) {
-                    if (error) {
-                        throw error;
+                            var sessionId = 'sessionId:' + nextId.toString();
+                            redisClient.multi()
+                                .hmset(sessionId, 'name', req.body.name, 'password', req.body.password)
+                                .hmset('gameUsers', req.body.name, sessionId)
+                                .exec(function(error, multiResults) {
+                                    if (error) {
+                                        throw error;
+                                    }
+                                    res.status(201).json({sessionId: sessionId, name: req.body.name});
+                                });
+                        });
                     }
-                });
-
-                res.status(201).json({sessionId: sessionId, name: req.body.name});
+                }
             });
         }
     });

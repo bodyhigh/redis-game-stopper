@@ -57,6 +57,28 @@ describe('/api/session', function() {
                     });
                 });
         });
+
+        it('Returns 200 status when logging in with an existing account, retrieves the existing data in json format', function(done) {
+            request(app)
+                .post('/api/session')
+                .send({name: 'bob dobbs', password: 'supergenius'})
+                .expect(201)
+                .expect(/sessionid:/i)
+                .end(function(err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    should(res.body).have.property('sessionId');
+                    should(res.body.sessionId).equal('sessionId:1');
+                    should(res.body).have.property('name');
+                    should(res.body.name).equal('bob dobbs');
+
+                    redisClient.hget('gameUsers', res.body.name, function(error, sessionId) {
+                        should('sessionId:1').equal(sessionId);
+                        done();
+                    });
+                });
+        });
     });
 
     describe('GET: /api/session/:sessionid', function() {
@@ -79,4 +101,5 @@ describe('/api/session', function() {
                 });
         });
     });
+
 });

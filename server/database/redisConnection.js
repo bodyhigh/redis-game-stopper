@@ -11,7 +11,7 @@ if (process.env.REDISTOGO_URL) {
 }
 
 if (env === 'test') {
-    client.select(env.length);
+    client.select(4);
 }
 
 // TODO: Should I be closing the client as well?

@@ -22,6 +22,16 @@ angular.module('redisGame', [
                 controllerAs: 'vm',
                 templateUrl: 'partial/views/login.html'
             })
+            .when('/logout', {
+                        name: 'logout',
+                        referrer: 'logout',
+                        template: '',
+                        controller: function($location, $route, authService) {
+                            var referrer = $route.current.params.referrer || $route.current.referrer || '/';
+                            authService.logout();
+                            $location.path('/');
+                        }
+                    })
             .otherwise({
                 redirectTo: '/'
             });

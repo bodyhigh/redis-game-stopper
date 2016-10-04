@@ -1,0 +1,18 @@
+<div class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Redis Game Stopper</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/">Home</a></li>
+                <li ng-show="auth.isLoggedIn()"><a href="/game">Game</a></li>
+                <li ng-hide="auth.isLoggedIn()"><a href="/login">Login</a></li>
+                <li ng-show="auth.isLoggedIn()"><a href="/logout">Log Out</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li ng-show="auth.isLoggedIn()"><a href="#" class="fa fa-cog">&nbsp;{{auth.getName()}}</a></li>
+            <ul>
+        </div>
+    </div>
+</div>

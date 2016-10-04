@@ -3,10 +3,9 @@
 angular.module('redisGame')
     .controller('loginController', loginController);
 
-loginController.$inject = ['$scope', '$http', 'authService', 'Session'];
+loginController.$inject = ['$scope', '$http', 'authService', 'Session', '$location'];
 
-function loginController($scope, $http, authService, Session) {
-    // $scope.session = new Session();
+function loginController($scope, $http, authService, Session, $location) {
     $scope.session = {};
 
     $scope.saveForm = function(session) {
@@ -23,8 +22,9 @@ function loginController($scope, $http, authService, Session) {
 
         ///////////////////////////////////////////////////////
         var results = Session.save({}, $scope.session, function(sess) {
-            authService.setSessionId(sess.sessionId);
-            console.dir(authService.getSessionId());
+            authService.setSession(sess);
+            // console.dir(authService.getSessionId());
+            $location.path('/');
         }, function(err) {
             if (err && err.data && err.data.error) {
                 console.error('[loginController] saveForm() - ' + err.data.error);
